@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <xsl:output method="text"/>
+  <xsl:template match="revelationdata">
+    <xsl:apply-templates select="entry">
+      <xsl:with-param name="prefix">
+	<xsl:text>revelation/input</xsl:text>
+      </xsl:with-param>
+    </xsl:apply-templates>
+  </xsl:template>
+  <xsl:template match="entry">
+    <xsl:param name="prefix"/>
+    <xsl:choose>
+      <xsl:when test="@type='folder'">
+	<xsl:apply-templates select="entry">
+	  <xsl:with-param name="prefix">
+	    <xsl:value-of select="$prefix"/>
+	    <xsl:text>/</xsl:text>
+	    <xsl:value-of select="name"/>
+	  </xsl:with-param>
+	</xsl:apply-templates>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:text>echo -en "</xsl:text>
+	<xsl:apply-templates select="name|description|updated|notes|field"/>
+	<xsl:text>\n" | pass insert --multiline </xsl:text>
+	<xsl:value-of select="$prefix"/>
+	<xsl:text>/</xsl:text>
+	<xsl:value-of select="name"/>
+	<xsl:text>
+</xsl:text>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template match="field">
+    <xsl:value-of select="@id"/>
+    <xsl:text>=</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>\n</xsl:text>
+  </xsl:template>
+  <xsl:template match="name">
+    <xsl:text>name=</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>\n</xsl:text>
+  </xsl:template>
+  <xsl:template match="description">
+    <xsl:text>description=</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>\n</xsl:text>
+  </xsl:template>
+  <xsl:template match="update">
+    <xsl:text>updated=</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>\n</xsl:text>
+  </xsl:template>
+  <xsl:template match="notes">
+    <xsl:text>notes=</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>\n</xsl:text>
+  </xsl:template>
+</xsl:stylesheet>
