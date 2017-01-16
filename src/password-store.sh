@@ -604,6 +604,9 @@ cmd_copy_move() {
 	fi
 }
 
+cmd_expiry() {
+}
+
 cmd_git() {
 	if [[ $1 == "init" ]]; then
 		git "$@" || exit 1
@@ -669,6 +672,7 @@ case "$1" in
 	rename|mv) shift;		cmd_copy_move "move" "$@" ;;
 	copy|cp) shift;			cmd_copy_move "copy" "$@" ;;
 	git) shift;			cmd_git "$@" ;;
+	expiry) shift;			cmd_expiry "$@" ;;
 	*)				cmd_extension_or_show "$@" ;;
 esac
 exit 0
