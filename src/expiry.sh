@@ -3,7 +3,7 @@
 cd ~/.password-store &&
     git ls-tree --name-only -r master | while read FILE
     do
-	[ -z "$(git log --after $(date -d "${1}" +%Y-%m-%d) --follow ${FILE})" ] &&
+	[ -z "$(git log --after $(date -d "${@}" +%Y-%m-%d) --follow ${FILE})" ] &&
 	    echo ${FILE%.*} has expired. &&
 	    PLAIN=$(pass show ${FILE%.*}) &&
 	    echo ${PLAIN} &&
@@ -30,6 +30,7 @@ cd ~/.password-store &&
 			    prompt -m "NEW PATH" NEW_PATH &&
 				pass mv ${FILE%.*} ${NEW_PATH} &&
 				true
+			    ;;
 			C)
 			    prompt -m "NEW PATH" NEW_PATH &&
 				pass cp ${FILE%.*} ${NEW_PATH} &&
