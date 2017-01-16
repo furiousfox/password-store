@@ -35,17 +35,22 @@ cd ~/.password-store &&
 			    prompt -m "NEW PATH" NEW_PATH &&
 				pass cp ${FILE%.*} ${NEW_PATH} &&
 				true
+			    ;;
 			O)
 			    true
-			;;
+			    ;;
 			T)
 			    touch ~/password-store/${FILE} &&
 				pass git commit -am "TOUCHED ${FILE%.*} to unexpire." &&
 				true
-			;;
+			    ;;
+			*)
+			    input_cmd &&
+				true
+			    ;;
 		    esac &&
 		    true
-	    done &&
-	    true
+	    } &&
+	    input_cmd &&
     done &&
     true
