@@ -8,7 +8,7 @@ cd ~/.password-store &&
 	    PLAIN=$(pass show ${FILE%.*}) &&
 	    echo ${PLAIN} &&
 	    input_cmd(){
-		prompt -m "(I)nsert (E)dit (G)enerate (R)m (M)v (C)p (O)verlook (T)ouch" CMD &&
+		read -m "(I)nsert (E)dit (G)enerate (R)m (M)v (C)p (O)verlook (T)ouch" CMD &&
 		    case ${CMD} in
 			I)
 			    pass insert ${FILE%.*} &&
@@ -27,12 +27,12 @@ cd ~/.password-store &&
 				true
 			    ;;
 			M)
-			    prompt -m "NEW PATH" NEW_PATH &&
+			    read -m "NEW PATH" NEW_PATH &&
 				pass mv ${FILE%.*} ${NEW_PATH} &&
 				true
 			    ;;
 			C)
-			    prompt -m "NEW PATH" NEW_PATH &&
+			    read -m "NEW PATH" NEW_PATH &&
 				pass cp ${FILE%.*} ${NEW_PATH} &&
 				true
 			    ;;
