@@ -52,5 +52,6 @@ cd ~/.password-store &&
 		    true
 	    } &&
 	    input_cmd &&
+	    true
     done &&
     true
